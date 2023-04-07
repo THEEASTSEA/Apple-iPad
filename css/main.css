@@ -1722,6 +1722,7 @@ main {
   .camera .edit figcaption {
     display: none;
   }
+
 }
 
 @media (max-width: 740px) {
@@ -1976,7 +1977,7 @@ main {
     transform: translate(12px, 0);
   }
 
-  gi .accessories figure img {
+  .accessories figure img {
     width: 712px;
   }
 
