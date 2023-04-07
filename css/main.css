@@ -1720,7 +1720,7 @@ main {
   }
 
   .camera .edit figcaption {
-    transform: scale(.8), translate(27px);
+    display: none;
   }
 }
 
