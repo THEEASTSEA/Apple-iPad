@@ -41,12 +41,16 @@ const searchInputEl = searchWrapEl.querySelector('input')
 const searchDelayEls = [...searchWrapEl.querySelectorAll('li')]
 
 searchStarterEl.addEventListener('click', showSearch) // 콜백 함수
-searchCloserEl.addEventListener('click', hideSearch) // 콜백 함수
+searchCloserEl.addEventListener('click', function (event) {
+  event.stopPropagation()
+  hideSearch()
+}) // 이벤트 버블링 방지
 searchShadowEl.addEventListener('click', hideSearch) // 콜백 함수
 
 function showSearch() {
   headerEl.classList.add('searching')
   document.documentElement.classList.add('fixed')
+  stopScroll()
   headerMenuEls.reverse().forEach(function (el, index) {
     el.style.transitionDelay = index * .4 / headerMenuEls.length + 's' // li 태그의 수
   })
@@ -60,7 +64,6 @@ function showSearch() {
 function hideSearch() {
   headerEl.classList.remove('searching')
   document.documentElement.classList.remove('fixed')
-
   headerMenuEls.reverse().forEach(function (el, index) {
     el.style.trasitionDelay = index * .4 / headerMenuEls.length + 's' // li 태그의 수
   })
@@ -71,7 +74,71 @@ function hideSearch() {
   searchInputEl.value = ""
 }
 
+function playScroll() {
+  document.documentElement.classList.remove('fixed')
+}
+function stopScroll() {
+  document.documentElement.classList.add('fixed')
+}
 
+
+// 헤더 모바일 모드 메뉴 토글! 
+const menuStarterEl = document.querySelector('header .menu-starter')
+menuStarterEl.addEventListener('click', function () {
+  if (headerEl.classList.contains('menuing')) {
+    headerEl.classList.remove('menuing')
+    searchInputEl.value = "" // 모바일 모드에서 텍스트 입력 후 헤더 메뉴 종료 시 입력한 텍스트 초기화
+    playScroll()
+  } else {
+    headerEl.classList.add('menuing')
+    stopScroll()
+  }
+})
+
+// 헤더 검색~
+const searchTextFieldEl = document.querySelector('header .textfield')
+const searchCancelEl = document.querySelector('header .search-canceler')
+searchTextFieldEl.addEventListener('click', function () {
+  headerEl.classList.add('searching--mobile')
+  searchInputEl.focus()
+})
+searchCancelEl.addEventListener('click', function () {
+  headerEl.classList.remove('searching--mobile')
+})
+
+// 화면의 크기가 바뀔 때 콜백 함수 실행(가로 너비가 740보다 작으면 해당 클래스 제거)
+window.addEventListener('resize', function () {
+  if (window.innerWidth <= 740) {
+    headerEl.classList.remove('searching')
+  } else {
+    headerEl.classList.remove('searching--mobile')
+  }
+})
+
+// 모바일 모드 네비게이션 메뉴 토글
+const navEl = document.querySelector('nav')
+const navMenuToggleEl = navEl.querySelector('.menu-toggler')
+const navMenuShadowEl = navEl.querySelector('.shadow')
+
+navMenuToggleEl.addEventListener('click', function () {
+  if (navEl.classList.contains('menuing')) {
+    hideNavMenu()
+  } else {
+    showNavMenu()
+  }
+})
+
+navEl.addEventListener('click', function (event) { // 네비게이션을 클릭했을 때는 메뉴가 종료되지 않도록 이벤트 버블링 방지
+  event.stopPropagation()
+})
+navMenuShadowEl.addEventListener('click', hideNavMenu)
+window.addEventListener('click', hideNavMenu)
+function showNavMenu() {
+  navEl.classList.add('menuing')
+}
+function hideNavMenu() {
+  navEl.classList.remove('menuing')
+}
 
 // 요소의 가시성 관찰
 const io = new IntersectionObserver(function (entries) {
@@ -149,7 +216,8 @@ navigations.forEach(function (nav) {
   })
   mapEl.innerHTML = /* html */ `
     <h3>
-    <span class="text">${nav.title}</span>
+      <span class="text">${nav.title}</span>
+      <span class="icon">+</span>
     </h3>
     <ul>
       ${mapList}
@@ -162,3 +230,12 @@ navigations.forEach(function (nav) {
 // 현재 연도 구하기
 const thisYearEl = document.querySelector('span.this-year')
 thisYearEl.textContent = new Date().getFullYear()
+
+
+const mapEls = document.querySelectorAll('footer .navigations .map')
+mapEls.forEach(function (el) {
+  const h3El = el.querySelector('h3')
+  h3El.addEventListener('click', function () {
+    el.classList.toggle('active')
+  })
+})
