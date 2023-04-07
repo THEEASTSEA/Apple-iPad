@@ -307,7 +307,7 @@ a.link::after {
     max-width: 230px;
   }
 
-  .infos--large {
+  .infos--large .infos {
     max-width: 288px;
   }
 
@@ -332,7 +332,7 @@ a.link::after {
     padding: 0 20px;
   }
 
-  .infos--large {
+  .infos--large .infos {
     max-widdth: none;
   }
 
@@ -387,7 +387,7 @@ a.link::after {
   }
 
   .whitebox h1 {
-    fint-size: 36px;
+    font-size: 36px;
   }
 }
 
@@ -1291,6 +1291,10 @@ main {
     height: 503px;
   }
 
+  .power .multiple-apps figure {
+    transform: translate(71px, 0);
+  }
+
   .power .multiple-apps figure img {
     width: 682px
   }
@@ -1305,7 +1309,6 @@ main {
 
   .power .arcade .figures {
     height: 480px;
-    order: 1;
   }
 
   .power .arcade figure {
@@ -1333,7 +1336,7 @@ main {
   }
 
   .power .create figcaption {
-    transform: scale(.8) translate(420px, 747px);
+    display: none;
   }
 }
 
@@ -1390,9 +1393,7 @@ main {
     transform: translate(100px, 0)
   }
 
-  .power .create figure img {
-    width: 525px;
-  }
+  .power .create figure img {}
 
   .power .create figcaption {
     transform: scale(.8) translate(254px, 286px)
@@ -1682,6 +1683,10 @@ main {
     height: 500px;
   }
 
+  .infos.infos--center {
+    display: block;
+  }
+
   .camera .stage figure img {
     width: 678px;
   }
@@ -1727,7 +1732,6 @@ main {
   .camera .stage h1 {
     width: 304px;
     height: 350px;
-    background-image: url("../images/camera_hardware_caption_mobile.png");
     margin: 0 auto;
   }
 
@@ -1845,7 +1849,11 @@ main {
   }
 
   .wireless .facetime figcaption {
-    transform: scale(.8) translate(670px, -60px);
+    display: none;
+  }
+
+  .wireless .files figure img {
+    width: 676px;
   }
 
   .wireless .files figure img {
@@ -1954,6 +1962,10 @@ main {
   .accessories h1 {
     width: 384px;
     height: 243px;
+  }
+
+  .accessories .info {
+    max-width: none;
   }
 
   .accessories .figures {
@@ -2200,9 +2212,7 @@ main {
 }
 
 @media (max-width: 740px) {
-  .compare .whitebox {
-    max-width: 430px;
-  }
+  .compare .whitebox {}
 
   .compare .items {
     max-width: 190px;
